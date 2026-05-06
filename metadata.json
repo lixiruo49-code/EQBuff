@@ -1,0 +1,10 @@
+{
+  "name": "EQ buff",
+  "description": "面向年轻人的高情商话术生成与社交能力练习工具，AI 驱动的社交 Buff。",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "AI 话术生成",
+    "社交场景练习",
+    "情商维度分析"
+  ]
+}
