@@ -4,9 +4,12 @@ let genAI: any = null;
 
 function getAI() {
   if (!genAI) {
-    const apiKey = process.env.GEMINI_API_KEY;
+    // 优先检查 Vite 环境变量，这是 Vercel 等平台部署 Vite 项目的标准方式
+    const apiKey = import.meta.env.VITE_GEMINI_API_KEY || process.env.GEMINI_API_KEY;
+    
     if (!apiKey) {
-      throw new Error("Missing GEMINI_API_KEY");
+      console.error("DEBUG: Both import.meta.env.VITE_GEMINI_API_KEY and process.env.GEMINI_API_KEY are missing.");
+      throw new Error("Missing GEMINI_API_KEY (Make sure VITE_GEMINI_API_KEY is set in your Vercel Environment Variables and you have REDEPLOYED)");
     }
     genAI = new GoogleGenAI({ apiKey });
   }
@@ -42,7 +45,7 @@ export async function generateResponse(type: string, data: any) {
     }
 
     const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
+      model: "gemini-1.5-flash",
       contents: [{ parts: [{ text: prompt }] }]
     });
 
@@ -83,7 +86,7 @@ export async function scorePractice(question: string, answer: string) {
     }`;
 
     const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
+      model: "gemini-1.5-flash",
       contents: [{ parts: [{ text: prompt }] }],
       config: {
         responseMimeType: "application/json"
@@ -112,7 +115,7 @@ export async function generateQuestion(category: string, difficulty: string) {
     }`;
 
     const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
+      model: "gemini-1.5-flash",
       contents: [{ parts: [{ text: prompt }] }],
       config: {
         responseMimeType: "application/json"

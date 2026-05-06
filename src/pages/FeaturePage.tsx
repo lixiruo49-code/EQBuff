@@ -60,7 +60,7 @@ export function FeaturePage({ user, setUser }: { user: UserProfile, setUser: (u:
     } catch (err: any) {
       console.error(err);
       if (err?.message?.includes('API_KEY')) {
-        setError("配置错误：API秘钥未生效，请检查侧边栏设置。");
+        setError("配置错误：API秘钥未生效。如果您是在 Vercel 部署，请确保已设置 VITE_GEMINI_API_KEY 并重新部署项目。");
       } else if (err?.message?.includes('quota')) {
         setError("使用频率过高，请稍后再试。");
       } else {
